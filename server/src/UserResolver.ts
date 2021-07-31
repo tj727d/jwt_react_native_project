@@ -1,4 +1,6 @@
 import {Arg, Mutation, Query, Resolver} from 'type-graphql';
+import argon2 from 'argon2';
+import { User } from './entity/User';
 
 @Resolver()
 export class UserResolver {
@@ -7,16 +9,23 @@ export class UserResolver {
         return'hi!';
     }
 
-    @Mutation()
-    register(
+    @Mutation(() => Boolean)
+    async register(
         @Arg('email') email: string,
         @Arg('password') password: string,
     ){
+        const hashedPassword = await argon2.hash(password);
+        try{
+            await User.insert({
+                email,
+                password: hashedPassword,
+            });
 
-        await User.insert({
-            email.
-        })
-        return
+            return true;
+        } catch (err){
+            console.log(err.message);
+            return false;
+        }
     }
 
 }
