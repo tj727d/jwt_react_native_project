@@ -1,11 +1,15 @@
+import { Field, Int, ObjectType } from "type-graphql";
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 
+@ObjectType()
 @Entity("users")
 export class User extends BaseEntity {
 
+    @Field(() => Int)//exposes this field when ca
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Field()
     @Column('text')
     email: string;
 
