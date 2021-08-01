@@ -7,9 +7,10 @@ import { buildSchema } from "type-graphql";
 import { UserResolver } from "./UserResolver";
 import { createConnection } from "typeorm";
 import cookieParser from "cookie-parser";
-import { verify } from "argon2";
+import { verify } from "jsonwebtoken";
 import { User } from "./entity/User";
-import { createAccessToken } from "./auth";
+import { createAccessToken, createRefreshToken } from "./auth";
+import { sendRefreshToken } from "./sendRefreshToken";
 
 
 
@@ -26,7 +27,7 @@ import { createAccessToken } from "./auth";
 
         let payload: any = null;
         try{
-            payload = await verify(token, process.env.REFRESH_TOKEN_SECRET!);
+            payload = verify(token, process.env.REFRESH_TOKEN_SECRET!);
         }catch(err){
             console.log(err);
             return res.send({ok:false, accessToken: ''});
@@ -39,6 +40,8 @@ import { createAccessToken } from "./auth";
         if(!user){
             return res.send({ok:false, accessToken: ''});
         }
+
+        sendRefreshToken(res, createRefreshToken(user))
 
         return res.send({ok:true, accessToken: createAccessToken(user)});
     })
