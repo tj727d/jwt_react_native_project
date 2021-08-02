@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
+import { RouteComponentProps } from 'react-router-dom';
 import { useRegisterMutation } from 'src/generated/graphql';
 
-interface RegisterProps {
-
-}
-
-export const Register: React.FC<RegisterProps> = ({}) => {
+export const Register: React.FC<RouteComponentProps> = ({history}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [register] = useRegisterMutation();
@@ -21,7 +18,10 @@ export const Register: React.FC<RegisterProps> = ({}) => {
                     }
                 }
             );
+
             console.log(response.data)
+
+            history.push('/');
         }}>
             <div>
                 <input value={email} placeholder="email" onChange={ e => {
