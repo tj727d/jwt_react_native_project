@@ -1,44 +1,17 @@
-import AsyncStorage from '@react-native-community/async-storage';
+
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react'
+import React from 'react';
 import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
-import { setAccessToken } from '../accessToken';
-import {AuthContext} from '../AuthProvider';
+
 import { useMeQuery } from '../generated/graphql';
 
 export function Hello() {
-    const {data, loading, error} = useMeQuery()
+    const {data, loading, error} = useMeQuery({fetchPolicy: 'network-only'})
     const navigation = useNavigation();
-    const { user } = React.useContext(AuthContext);
 
-    const [screenLoading, setLoading] = useState(true);
    
   
-    useEffect(() => {
-      fetch("http://localhost:4000/refresh_token", {
-        method: "POST",
-        credentials: "include"
-      }).then(async x => {
-        const { accessToken } = await x.json();
-        setAccessToken(accessToken);
-        console.log('user',user)
-        console.log('saved token',accessToken)
-        if (accessToken !== (user) && accessToken != ("")){
-            console.log('saving user')
-            AsyncStorage.setItem("user", accessToken);
-        }
-        setLoading(false);
-      });
-    }, []);
-  
-    if(screenLoading){
-        return (
-             <View style={styles.center}>
-            <ActivityIndicator size ='large'/>
-        </View>
-        );
-    }
-  
+
     if (loading){
         return <View style={styles.center}>
             <ActivityIndicator size ='large'/>
@@ -62,6 +35,12 @@ export function Hello() {
             <Button
                 onPress={() => {navigation.navigate('Bye')}}
                 title="Bye"
+                color="#841584"
+                accessibilityLabel="Learn more about this purple button"
+            />
+            <Button
+                onPress={() => {navigation.navigate('Users')}}
+                title="Users"
                 color="#841584"
                 accessibilityLabel="Learn more about this purple button"
             />

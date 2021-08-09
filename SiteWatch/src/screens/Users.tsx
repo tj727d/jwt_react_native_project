@@ -1,16 +1,13 @@
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native';
+import { useUsersQuery } from '../generated/graphql';
 
-import React from 'react';
-import {StyleSheet, Text, View,  } from 'react-native';
-
-import { useByeQuery } from '../generated/graphql';
-
-interface ByeProps {
+interface UsersProps {
 
 }
 
-export const Bye: React.FC<ByeProps> = ({}) => {
-
-    const {data, loading, error} = useByeQuery({fetchPolicy: 'network-only'})
+export const Users: React.FC<UsersProps> = ({}) => {
+    const {data, loading, error} = useUsersQuery({fetchPolicy: 'network-only'})
 
     if(loading){
         return( 
@@ -39,9 +36,9 @@ export const Bye: React.FC<ByeProps> = ({}) => {
 
     return (
        <View style={styles.center}>
-        <Text>
-            {data.bye}
-        </Text>
+            {data.users && data.users.map(user =>{
+                <Text> {user.email} </Text>
+            })}
         </View>
     );
 };

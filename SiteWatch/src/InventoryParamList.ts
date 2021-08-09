@@ -5,6 +5,7 @@ import {RouteProp} from "@react-navigation/native";
 export type InventoryParamList = {
     Hello: undefined; 
     Bye: undefined;
+    Users: undefined;
 };
 export type Data  = {
     id: number;

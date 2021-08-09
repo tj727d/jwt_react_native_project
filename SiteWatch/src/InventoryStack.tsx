@@ -4,6 +4,7 @@ import {InventoryParamList,} from './InventoryParamList'
 
 import { Hello } from './screens/Hello';
 import { Bye } from './screens/Bye';
+import { Users } from './screens/Users';
 
 
 
@@ -31,6 +32,13 @@ export const InventoryStack: React.FC<InventoryStackProps> = ({}) => {
           component={Bye}
           options={{
               title: "Bye"
+          }}
+        />
+        <Stack.Screen 
+          name='Users' 
+          component={Users}
+          options={{
+              title: "Users"
           }}
         />
 

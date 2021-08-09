@@ -69,10 +69,13 @@ export const Login: React.FC<LoginProps> = ({}) => {
                     return data.login.user;
                   }
                 });
-                AsyncStorage.setItem("user", response.data!.login.accessToken);
+                if( response.data!.login.accessToken !== '{"_U": 0, "_V": 0, "_W": null, "_X": null}'){
+                  AsyncStorage.setItem("user", response.data!.login.accessToken);
+                }
                 if (response && response.data) {
                   setAccessToken(response.data.login.accessToken);
                 }
+                
                 getToken(response.data!.login.accessToken);
                 
             }} >

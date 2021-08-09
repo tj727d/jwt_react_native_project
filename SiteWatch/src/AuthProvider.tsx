@@ -1,5 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import { setAccessToken } from './accessToken';
 
 
 type UserToken = null | {token: string}
@@ -56,7 +57,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
                 try {
                 console.log(`Value passed: ${value}`)
                 setUser(value)
-                
+                //setAccessToken(value)
                 console.log(user)
 
                 } catch(e) {

@@ -1,3 +1,5 @@
+
+
 let accessToken = ""
 
 export const setAccessToken = (s: string) => {
@@ -5,5 +7,8 @@ export const setAccessToken = (s: string) => {
 }
 
 export const getAccessToken = () => {
-    return accessToken;
+
+        return accessToken;
+  
+    
 }
